@@ -7,13 +7,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 
-import io.flutter.app.FlutterActivity;
+import java.util.Map;
+
+import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 import io.flutter.embedding.engine.FlutterEngine;
-import io.flutter.view.FlutterMain;
+//import io.flutter.view.FlutterMain;
 
 public class MainActivity extends FlutterActivity  {
 
@@ -25,14 +27,15 @@ public class MainActivity extends FlutterActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        FlutterMain.startInitialization(this);
+//        FlutterMain.startInitialization(this);
         super.onCreate(savedInstanceState);
         GeneratedPluginRegistrant.registerWith(new FlutterEngine(this));
 
-        new MethodChannel(getFlutterView(),BLUETOOTH_CHANNEL).setMethodCallHandler(
+        new MethodChannel(getFlutterEngine().getDartExecutor().getBinaryMessenger(),BLUETOOTH_CHANNEL).setMethodCallHandler(
                 new MethodChannel.MethodCallHandler() {
                     @Override
                     public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
+                        final Map<String, Object> args = methodCall.arguments();
                         if(methodCall.method.equals("openBuleTooth")){	//判断flutter调用那个方法
                             if(supportBuleTooth()){						//检测真机是否支持蓝牙
                                 openBuleTooth();							//打开蓝牙
@@ -53,6 +56,14 @@ public class MainActivity extends FlutterActivity  {
                             Intent it = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
                             startActivity(it);
                             result.success("打开成功");
+//                            final String type =(String) args.get("type");
+//                            assert type != null;
+//                            if(type.equals("Settings.ACTION_BLUETOOTH_SETTINGS")){
+//                                Intent it = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+//                                startActivity(it);
+//                                result.success("打开成功");
+//                            }
+
                         }
 
                     }

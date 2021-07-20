@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_huanhu/conpontent/ui/toast.dart';
+import 'package:flutter_huanhu/conpontent/ui/my_toast.dart';
 import 'package:flutter_huanhu/utils/local_storage.dart';
 
 /// 函数防抖
@@ -96,7 +96,7 @@ formatNum(double num, int postion) {
 //[type]: key
 //[value]: value
 //[required]: 是否必填
-FormCheck(key, value, [required = false]) {
+formCheck(key, value, [required = false]) {
   bool isEmpty = value == null || value == '';
   var str;
   switch (key) {
@@ -139,8 +139,8 @@ FormCheck(key, value, [required = false]) {
 //[value]: value
 //[info]: eg:联系人        则提示联系人+'err'
 //[required]: 是否必填
-bool FormCheckToast(key, value, [info = '', required = false]) {
-  var v = FormCheck(key, value, required);
+bool formCheckToast(key, value, [info = '', required = false]) {
+  var v = formCheck(key, value, required);
   print(v);
   print(typeOf(v));
   if (typeOf(v) == 'String') {

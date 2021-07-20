@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/conpontent/ui/toast.dart';
 
 import 'color_utils.dart';
 import 'icon.dart';
+import 'my_toast.dart';
 
 // ignore: must_be_immutable
 class XComputer extends StatefulWidget {

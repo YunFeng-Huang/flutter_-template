@@ -5,6 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_huanhu/conpontent/ui/color_utils.dart';
 import 'package:flutter_huanhu/conpontent/ui/index.dart';
 
+class ThemeColor {
+  static get disable => Color(0xFFC4C4C4);
+  static get active => Color(0xFFF39038);
+  static get red => Color(0xFFFFC4F32);
+  static get white => Color(0xFFFFFFFF);
+  static get background => Color(0xFFEEEFF3);
+  static get line => Color(0xFFEFF3);
+}
+
 TextStyle font(double value, {bool bold = false, color = "#666666", colorA, height, lineThrough = false, letterSpacing = false}) => TextStyle(
       fontWeight: bold ? FontWeight.bold : FontWeight.normal,
       fontSize: value.w,
@@ -14,7 +23,7 @@ TextStyle font(double value, {bool bold = false, color = "#666666", colorA, heig
       height: height,
     );
 
-Widget p(child) {
+Widget P(child) {
   return RichText(
     text: TextSpan(
       children: child
@@ -26,22 +35,12 @@ Widget p(child) {
   );
 }
 
-Container division({width, height}) {
+// ignore:non_constant_identifier_names
+Container Division({width, height}) {
   return Container(
     width: width,
     height: height,
     color: HexToColor(ThemeColor.line),
     margin: EdgeInsets.symmetric(vertical: 10.w),
   );
-}
-
-class ThemeColor {
-  static get disable => '#C4C4C4';
-  static get active => '#F39038';
-  static get activeA => Color.fromRGBO(255, 156, 0, 1);
-  static get red => '#FC4F32';
-  static get white => '#FFFFFF';
-  static get background => '#EEEFF3';
-  static get backgroundTwo => '#FCFBFD';
-  static get line => '#EEEFF3';
 }

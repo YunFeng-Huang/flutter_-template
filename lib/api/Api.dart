@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter_huanhu/conpontent/ui/toast.dart';
+import 'package:flutter_huanhu/conpontent/ui/my_toast.dart';
 import 'package:flutter_huanhu/utils/local_storage.dart';
 import 'package:flutter_huanhu/utils/log_util.dart';
 

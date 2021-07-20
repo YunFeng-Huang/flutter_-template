@@ -4,9 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_huanhu/config.dart';
 import 'package:flutter_huanhu/conpontent/ui/my_uploadFile.dart';
-import 'package:flutter_huanhu/conpontent/ui/toast.dart';
 import 'package:flutter_huanhu/utils/log_util.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 
 import '../../../main.dart';
 import '../../Api.dart';
@@ -27,19 +26,19 @@ class HomeApi {
     return response;
   }
 
-  static Future uploadBigFile() async {
-    await XupLoadFile.getVideo(ImageSource.gallery);
-    String token = await getToken();
-
-    var previewLink = await XupLoadFile.upload(
-      type: 'video',
-      url: Config.baseUrl + URl.uploadBigFile,
-      token: token,
-      merchantId: Config.merchantId,
-    );
-    print(previewLink);
-    // var response = await Api.putBigFile(URl.uploadBigFile, filePath);
-    // var previewLink = jsonDecode(response)['previewLink'];
-    return previewLink;
-  }
+  // static Future uploadBigFile() async {
+  //   await XupLoadFile.getVideo(ImageSource.gallery);
+  //   String token = await getToken();
+  //
+  //   var previewLink = await XupLoadFile.upload(
+  //     type: 'video',
+  //     url: Config.baseUrl + URl.uploadBigFile,
+  //     token: token,
+  //     merchantId: Config.merchantId,
+  //   );
+  //   print(previewLink);
+  //   // var response = await Api.putBigFile(URl.uploadBigFile, filePath);
+  //   // var previewLink = jsonDecode(response)['previewLink'];
+  //   return previewLink;
+  // }
 }
