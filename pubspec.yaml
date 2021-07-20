@@ -31,7 +31,9 @@ dependencies:
   dio: 4.0.0 # 接口
   shared_preferences: ^0.5.7+3 # 存储
   image_picker: 0.8.2 #照片
-  bluetooth_print: 3.0.1
+  bluetooth_print: 3.0.1 #蓝牙打印
+  cached_network_image: ^3.1.0  #图片缓存
+  flutter_webview_plugin: 0.4.0 # h5
 #  zs_bluetooth_printer:
 #    git:
 #      url: https://github.com/xiyuxiaoxiao/flutter_public.git

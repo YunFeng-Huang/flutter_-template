@@ -25,7 +25,11 @@ class Routers {
     return obj;
   }
 
-  static pushNamed(v) {
-    return Navigator.pushNamed(context!, routeToString(v));
+  static pushNamed(v, {callback, newContext}) {
+    return Navigator.pushNamed(newContext ?? context, routeToString(v)).then((value) => callback.call(value));
+  }
+
+  static pop({callback, newContext}) {
+    return Navigator.pop(newContext ?? context);
   }
 }
