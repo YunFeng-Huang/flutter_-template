@@ -26,10 +26,22 @@ class Routers {
   }
 
   static pushNamed(v, {callback, newContext}) {
-    return Navigator.pushNamed(newContext ?? context, routeToString(v)).then((value) => callback.call(value));
+    return Navigator.pushNamed(newContext ?? context, routeToString(v)).then((value) => callback?.call(value));
   }
 
-  static pop({callback, newContext}) {
-    return Navigator.pop(newContext ?? context);
+  static pop([newContext]) async {
+    return canPop() ? Navigator.pop(newContext ?? context) : null;
+  }
+
+  /// 能否返回 */
+  static bool canPop({newContext}) {
+    return Navigator.canPop(newContext ?? context);
+  }
+
+  /// 替换路由 */
+  static void pushReplacementNamed(String path, {arguments, newContext, callback}) {
+    Navigator.of(newContext ?? context).pushReplacementNamed(path, arguments: arguments).then((value) {
+      callback?.call(value);
+    });
   }
 }

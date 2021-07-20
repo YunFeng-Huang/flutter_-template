@@ -8,12 +8,12 @@ import 'color_utils.dart';
 
 // ignore: must_be_immutable
 class XCustomScrollView extends StatefulWidget {
-  XCustomScrollViewAppbar appbar;
+  XCustomScrollViewAppbar? appbar;
   Color backgroundColor;
   dynamic loading;
   List<Widget> slivers;
   Widget? bottomAppBar;
-  XCustomScrollView({Key? key, this.loading, required this.slivers, required this.appbar, this.backgroundColor = Colors.transparent, this.bottomAppBar}) {
+  XCustomScrollView({Key? key, required this.loading, required this.slivers, this.appbar, this.backgroundColor = Colors.transparent, this.bottomAppBar}) {
     if (bottomAppBar != null) {
       slivers.add(
         SliverToBoxAdapter(
@@ -31,28 +31,29 @@ class XCustomScrollView extends StatefulWidget {
 
 class _XCustomScrollViewState extends State<XCustomScrollView> {
   dynamic get data => widget.loading;
-  XCustomScrollViewAppbar get appbar => widget.appbar;
+  XCustomScrollViewAppbar? get appbar => widget.appbar;
   Color get backgroundColor => widget.backgroundColor;
   List<Widget> get slivers => widget.slivers;
   Widget? get bottomAppBar => widget.bottomAppBar;
   ScrollController controller = ScrollController();
   double opacity = 0.0;
+  double appbarHeight = 100.w;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    controller.addListener(() {
-      setState(() {
-        opacity = controller.offset >= 100 ? 1.00 : controller.offset / 100;
+    if (!isNotNull(appbar?.customAppBar))
+      controller.addListener(() {
+        setState(() {
+          opacity = controller.offset >= appbarHeight ? 1.00 : controller.offset / appbarHeight;
+        });
       });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     if (data == null) return Loading();
-    print(opacity);
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Stack(
@@ -62,18 +63,21 @@ class _XCustomScrollViewState extends State<XCustomScrollView> {
             controller: controller,
             slivers: slivers,
           ),
-          XAppBarWidget(
-            context,
-            title: appbar.title,
-            color: Colors.white.withOpacity(1 - opacity),
-          ).background(
-            color: Colors.white.withOpacity(opacity),
-          ),
-          XAppBarWidget(
-            context,
-            title: appbar.title,
-            color: Colors.black.withOpacity(opacity),
-          ),
+          if (!isNotNull(appbar?.customAppBar))
+            XAppBarWidget(
+              context,
+              title: appbar?.title,
+              color: Colors.white.withOpacity(1 - opacity),
+            ).background(
+              color: Colors.white.withOpacity(opacity),
+            ),
+          if (!isNotNull(appbar?.customAppBar))
+            XAppBarWidget(
+              context,
+              title: appbar?.title,
+              color: Colors.black.withOpacity(opacity),
+            ),
+          if (isNotNull(appbar?.customAppBar)) appbar!.customAppBar!,
           if (bottomAppBar != null)
             Container(
               height: 98.w,
@@ -97,8 +101,9 @@ class _XCustomScrollViewState extends State<XCustomScrollView> {
 }
 
 class XCustomScrollViewAppbar {
-  String title;
-  XCustomScrollViewAppbar({required this.title});
+  String? title;
+  Widget? customAppBar;
+  XCustomScrollViewAppbar({this.title, this.customAppBar});
 }
 
 // ignore: non_constant_identifier_names
