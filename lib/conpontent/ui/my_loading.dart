@@ -45,7 +45,7 @@ class _LoadingState extends State<Loading> {
   }
 
   void cancelTimer() {
-    _timer.cancel();
+    if (LoadingConfig.type ?? false) _timer.cancel();
     _timer = null as Timer;
   }
 

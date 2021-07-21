@@ -53,49 +53,52 @@ class _XCustomScrollViewState extends State<XCustomScrollView> {
 
   @override
   Widget build(BuildContext context) {
-    if (data == null) return Loading();
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: Stack(
-        children: [
-          CustomScrollView(
-            physics: ClampingScrollPhysics(),
-            controller: controller,
-            slivers: slivers,
-          ),
-          if (!isNotNull(appbar?.customAppBar))
-            XAppBarWidget(
-              context,
-              title: appbar?.title,
-              color: Colors.white.withOpacity(1 - opacity),
-            ).background(
-              color: Colors.white.withOpacity(opacity),
+      body: data == null
+          ? Center(
+              child: Loading(),
+            )
+          : Stack(
+              children: [
+                CustomScrollView(
+                  physics: ClampingScrollPhysics(),
+                  controller: controller,
+                  slivers: slivers,
+                ),
+                if (!isNotNull(appbar?.customAppBar))
+                  XAppBarWidget(
+                    context,
+                    title: appbar?.title,
+                    color: Colors.white.withOpacity(1 - opacity),
+                  ).background(
+                    color: Colors.white.withOpacity(opacity),
+                  ),
+                if (!isNotNull(appbar?.customAppBar))
+                  XAppBarWidget(
+                    context,
+                    title: appbar?.title,
+                    color: Colors.black.withOpacity(opacity),
+                  ),
+                if (isNotNull(appbar?.customAppBar)) appbar!.customAppBar!,
+                if (bottomAppBar != null)
+                  Container(
+                    height: 98.w,
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.05), //底色,阴影颜色
+                          blurRadius: 1, // 阴影模糊层度
+                          spreadRadius: 1, //阴影模糊大小
+                        )
+                      ],
+                    ),
+                    child: bottomAppBar,
+                  ).bottomCenter
+              ],
             ),
-          if (!isNotNull(appbar?.customAppBar))
-            XAppBarWidget(
-              context,
-              title: appbar?.title,
-              color: Colors.black.withOpacity(opacity),
-            ),
-          if (isNotNull(appbar?.customAppBar)) appbar!.customAppBar!,
-          if (bottomAppBar != null)
-            Container(
-              height: 98.w,
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.05), //底色,阴影颜色
-                    blurRadius: 1, // 阴影模糊层度
-                    spreadRadius: 1, //阴影模糊大小
-                  )
-                ],
-              ),
-              child: bottomAppBar,
-            ).bottomCenter
-        ],
-      ),
     );
   }
 }

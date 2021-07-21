@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return XCustomScrollView(
       backgroundColor: Colors.white,
-      loading: 'aa',
+      loading: 'null',
       appbar: XCustomScrollViewAppbar(
         customAppBar: XAppBarWidget2(context),
       ),
