@@ -1,13 +1,19 @@
 package com.example.flutter_huanhu;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
@@ -25,6 +31,16 @@ public class MainActivity extends FlutterActivity  {
     private BluetoothManager bluetoothManager = null;	 //初始化
     private BluetoothAdapter bluetoothAdapter = null;	//蓝牙适配器
 
+//    private BroadcastReceiver receiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            String action = intent.getAction();
+//            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+//                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+//                System.out.println(device.getName());
+//            }
+//        }
+//    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        FlutterMain.startInitialization(this);
@@ -56,20 +72,33 @@ public class MainActivity extends FlutterActivity  {
                             Intent it = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
                             startActivity(it);
                             result.success("打开成功");
-//                            final String type =(String) args.get("type");
-//                            assert type != null;
-//                            if(type.equals("Settings.ACTION_BLUETOOTH_SETTINGS")){
-//                                Intent it = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
-//                                startActivity(it);
-//                                result.success("打开成功");
-//                            }
+                        }else if(methodCall.method.equals("getBondedDevices")){
+                            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+                            Set<BluetoothDevice> devices = adapter.getBondedDevices();
+                            System.out.println(devices);
+                            for (BluetoothDevice device : devices) {
+                                String pattern = ".*MPT.*";
+                                boolean isMatch = Pattern.matches(pattern, device.getName());
+                                if (isMatch) {
+                                    System.out.println(device.getAddress());
+                                    System.out.println(device.getName());
+                                    System.out.println("========");
+//                                    BluetoothDevice device = devices[0];
+                                    result.success(device.toString());
+                                }
 
+                            }
+
+//
                         }
 
                     }
                 }
         );
     }
+
+
+
     //是否支持蓝牙
     private boolean supportBuleTooth(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {

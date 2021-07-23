@@ -16,12 +16,12 @@ void showToast(String text, {icon, showTime = 2000}) {
 }
 
 //用法 showLoading('加载中，请等待... ...')
-void showLoading([String text = "加载中，请等待..."]) {
+void showLoading([String text = "加载中，请等待...", c]) {
   BuildContext context = ToastCompoent.context;
   throttle(() {
     return showDialog(
       barrierDismissible: false,
-      context: context,
+      context: c ?? context,
       builder: (context) {
         return Center(
           child: Container(

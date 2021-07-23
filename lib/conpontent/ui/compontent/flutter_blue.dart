@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/services.dart';
 
 class FlutterBlue {
@@ -21,6 +23,10 @@ class FlutterBlue {
   Future<void> getBlueTooth() async {
     //检测蓝牙
     return await methodChannel.invokeMethod('getBuleTooth');
+  }
+
+  Future<String> getBondedDevices() async {
+    return await methodChannel.invokeMethod('getBondedDevices');
   }
 
   Future<void> openXiTongApi() async {

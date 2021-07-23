@@ -16,7 +16,7 @@ String routeToString(v) {
 }
 
 class Routers {
-  static BuildContext? get context => navigatorKey.currentState?.context;
+  static BuildContext? get _context => navigatorKey.currentState?.context;
   static Map<String, Widget Function(BuildContext)> map() {
     Map<String, Widget Function(BuildContext)> obj = {};
     routeJson.forEach((key, value) {
@@ -25,22 +25,22 @@ class Routers {
     return obj;
   }
 
-  static pushNamed(v, {callback, newContext}) {
-    return Navigator.pushNamed(newContext ?? context, routeToString(v)).then((value) => callback?.call(value));
+  static pushNamed(v, {callback, context}) {
+    return Navigator.pushNamed(context ?? _context, routeToString(v)).then((value) => callback?.call(value));
   }
 
-  static pop([newContext]) async {
-    return canPop() ? Navigator.pop(newContext ?? context) : null;
+  static pop([context]) async {
+    return canPop() ? Navigator.pop(context ?? _context) : null;
   }
 
   /// 能否返回 */
-  static bool canPop({newContext}) {
-    return Navigator.canPop(newContext ?? context);
+  static bool canPop({context}) {
+    return Navigator.canPop(context ?? _context);
   }
 
   /// 替换路由 */
-  static void pushReplacementNamed(String path, {arguments, newContext, callback}) {
-    Navigator.of(newContext ?? context).pushReplacementNamed(path, arguments: arguments).then((value) {
+  static void pushReplacementNamed(String path, {arguments, context, callback}) {
+    Navigator.of(context ?? _context).pushReplacementNamed(path, arguments: arguments).then((value) {
       callback?.call(value);
     });
   }

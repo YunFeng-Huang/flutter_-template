@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: routeToString(routes.home),
       routes: Routers.map(),
       builder: (context, child) {
-        ScreenUtil.init(context, designSize: Size(1334, 750), allowFontScaling: false);
+        ScreenUtil.init(context, designSize: Size(1280, 800), allowFontScaling: false);
         return child!;
       },
       onGenerateRoute: (RouteSettings settings) {
